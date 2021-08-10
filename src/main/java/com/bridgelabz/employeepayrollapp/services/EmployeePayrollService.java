@@ -4,11 +4,11 @@ import com.bridgelabz.employeepayrollapp.dto.EmployeePayrollDTO;
 import com.bridgelabz.employeepayrollapp.dto.ResponseDTO;
 import com.bridgelabz.employeepayrollapp.model.EmployeePayrollData;
 import com.bridgelabz.employeepayrollapp.repository.EmployeePayrollRepository;
-import javassist.NotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import com.bridgelabz.employeepayrollapp.exception.NotFoundException;
 import java.util.List;
 
 @Service
@@ -23,7 +23,7 @@ public class EmployeePayrollService implements IEmployeePayrollService {
     }
 
     @Override
-    public EmployeePayrollData getEmployeePayrollById(int empId) throws NotFoundException {
+    public EmployeePayrollData getEmployeePayrollById(int empId)  {
         return employeePayrollRepository.findById(empId)
                 .orElseThrow(() -> new NotFoundException("User id not found" +empId));
     }
@@ -42,7 +42,7 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 
     @Override
     public EmployeePayrollData updateEmployeePayrollData(int empID,
-                                                         EmployeePayrollDTO empPayrollDTO) throws NotFoundException {
+                                                         EmployeePayrollDTO empPayrollDTO)  {
         EmployeePayrollData empData = employeePayrollRepository.findById(empID)
                 .orElseThrow(() -> new NotFoundException("User not found with this Id: " + empID));;
         empData = this.convertEntity(empData, empPayrollDTO);

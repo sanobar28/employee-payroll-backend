@@ -3,19 +3,19 @@ package com.bridgelabz.employeepayrollapp.model;
 import com.bridgelabz.employeepayrollapp.dto.EmployeePayrollDTO;
 import lombok.Data;
 
+import javax.persistence.*;
+import java.util.Date;
+
 @Data
+@Entity
 public class EmployeePayrollData {
 
-    private int employeeID;
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private int id;
     private String name;
-    private long salary;
+    private String gender;
+    private int salary;
+    private String department;
 
-    public EmployeePayrollData(int empID, EmployeePayrollDTO empPayrollDTO) {
-        this.employeeID = empID;
-        this.name = empPayrollDTO.name;
-        this.salary = empPayrollDTO.salary;
-    }
-
-    public EmployeePayrollData() {
-    }
 }

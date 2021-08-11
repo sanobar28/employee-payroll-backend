@@ -56,15 +56,6 @@ public class EmployeePayrollService implements IEmployeePayrollService {
         return new ResponseDTO("Deleted Successfully");
     }
 
-    private EmployeePayrollDTO convertObj (EmployeePayrollData employee) {
-        EmployeePayrollDTO employeePayrollDTO = new EmployeePayrollDTO();
-        employeePayrollDTO.setName(employee.getName());
-        employeePayrollDTO.setGender(employee.getGender());
-        employeePayrollDTO.setDepartment(employee.getDepartment());
-        employeePayrollDTO.setSalary(employee.getSalary());
-        return employeePayrollDTO;
-    }
-
     private EmployeePayrollData convertEntity (EmployeePayrollData empData, EmployeePayrollDTO employeePayrollDTO) {
         empData.setName(employeePayrollDTO.getName());
         empData.setDepartment(employeePayrollDTO.getDepartment());

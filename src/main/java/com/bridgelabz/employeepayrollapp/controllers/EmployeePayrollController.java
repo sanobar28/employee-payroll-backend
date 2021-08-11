@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -31,13 +32,13 @@ public class EmployeePayrollController {
 
     @PostMapping("/create")
     public ResponseEntity<ResponseDTO> addEmployeePayrollData(
-            @RequestBody EmployeePayrollDTO employeePayrollDTO) {
+            @Valid @RequestBody EmployeePayrollDTO employeePayrollDTO) {
         return new ResponseEntity<ResponseDTO>(employeePayrollService.createEmployeePayrollData(employeePayrollDTO), HttpStatus.OK);
     }
 
     @PutMapping("/update/{empID}")
     public ResponseEntity<EmployeePayrollData> updateEmployeePayrollData(@PathVariable int empID,
-            @RequestBody EmployeePayrollDTO employeePayrollDTO) throws NotFoundException {
+           @Valid @RequestBody EmployeePayrollDTO employeePayrollDTO) throws NotFoundException {
         return new ResponseEntity<>(employeePayrollService.updateEmployeePayrollData(empID,employeePayrollDTO), HttpStatus.OK);
     }
 

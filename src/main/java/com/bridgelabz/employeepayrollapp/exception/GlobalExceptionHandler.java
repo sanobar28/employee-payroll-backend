@@ -10,16 +10,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler
+    @ExceptionHandler (EmployeePayrollException.class)
     public ResponseEntity<Error> handle(EmployeePayrollException e) {
         if(e instanceof NotFoundException) {
             return new ResponseEntity<Error>(new Error(e.getMessage(), 404), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Error>(new Error(e.getMessage(), 500), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<Error> handle(Exception ex) {
-        return new ResponseEntity<Error>(new Error(ex.getMessage(), 500), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<Error>(new Error(e.getMessage(), 400), HttpStatus.BAD_REQUEST);
     }
 }

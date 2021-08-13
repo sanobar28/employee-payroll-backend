@@ -51,7 +51,7 @@ public class EmployeePayrollService implements IEmployeePayrollService {
        if (empData != null) {
            return new  ResponseDTO("Data inserted successfully!!");
        } else {
-           throw new EmployeePayrollException("Invalid Data");
+           throw new EmployeePayrollException("Insertion failed");
        }
     }
 
@@ -65,7 +65,7 @@ public class EmployeePayrollService implements IEmployeePayrollService {
     public EmployeePayrollData updateEmployeePayrollData(int empID,
                                                          EmployeePayrollDTO empPayrollDTO)  {
         EmployeePayrollData empData = employeePayrollRepository.findById(empID)
-                .orElseThrow(() -> new NotFoundException("User not found with this Id: " + empID));;
+                .orElseThrow(() -> new NotFoundException("User not found with this Id: " + empID));
         empData = this.convertEntity(empData, empPayrollDTO);
         empData.setId(empID);
         return employeePayrollRepository.save(empData);

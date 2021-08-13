@@ -1,3 +1,13 @@
+/**
+ * @author Sanobar Mujawar
+ * @since 09.08.21
+ *
+ * Purpose: Employee payroll backend for making
+ * REST-API calls to database.
+ */
+
+
+
 package com.bridgelabz.employeepayrollapp.controllers;
 
 import com.bridgelabz.employeepayrollapp.dto.EmployeePayrollDTO;
@@ -23,16 +33,32 @@ public class EmployeePayrollController {
     @Autowired
     private IEmployeePayrollService employeePayrollService;
 
+    /**
+     * Get data from database
+     * @return
+     */
     @RequestMapping(value = {"/get"})
     public ResponseEntity<List<EmployeePayrollData>> getEmployeePayrollData() {
         return new ResponseEntity<>(employeePayrollService.getEmployeePayrollData(), HttpStatus.OK);
     }
 
+    /**
+     * Get employee data by ID
+     * @param empID
+     * @return
+     * @throws NotFoundException
+     */
     @GetMapping("/get/{empID}")
     public ResponseEntity<EmployeePayrollData> getEmployeePayrollData(@PathVariable int empID) throws NotFoundException {
         return new ResponseEntity<>(employeePayrollService.getEmployeePayrollById(empID), HttpStatus.OK);
     }
 
+    /**
+     * Create valid employee data in database
+     * @param employeePayrollDTO
+     * @param e  throws validation error message
+     * @return
+     */
     @PostMapping("/create")
     public ResponseEntity<ResponseDTO> addEmployeePayrollData(
             @Valid @RequestBody EmployeePayrollDTO employeePayrollDTO, BindingResult e) {
@@ -46,12 +72,24 @@ public class EmployeePayrollController {
         return new ResponseEntity<ResponseDTO>(employeePayrollService.createEmployeePayrollData(employeePayrollDTO), HttpStatus.OK);
     }
 
+    /**
+     * Update employee data by ID
+     * @param empID
+     * @param employeePayrollDTO
+     * @return
+     * @throws NotFoundException
+     */
     @PutMapping("/update/{empID}")
     public ResponseEntity<EmployeePayrollData> updateEmployeePayrollData(@PathVariable int empID,
            @Valid @RequestBody EmployeePayrollDTO employeePayrollDTO) throws NotFoundException {
         return new ResponseEntity<>(employeePayrollService.updateEmployeePayrollData(empID,employeePayrollDTO), HttpStatus.OK);
     }
 
+    /**
+     * Delete employee data by ID
+     * @param empID
+     * @return
+     */
     @DeleteMapping("/delete/{empID}")
     public ResponseEntity<ResponseDTO> deleteEmployeePayrollData(@PathVariable int empID) {
         return new ResponseEntity<ResponseDTO>(employeePayrollService.deleteEmployeePayrollData(empID), HttpStatus.OK);

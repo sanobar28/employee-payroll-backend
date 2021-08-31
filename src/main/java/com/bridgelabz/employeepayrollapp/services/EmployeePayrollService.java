@@ -6,11 +6,15 @@ import com.bridgelabz.employeepayrollapp.exception.EmployeePayrollException;
 import com.bridgelabz.employeepayrollapp.model.EmployeePayrollData;
 import com.bridgelabz.employeepayrollapp.repository.EmployeePayrollRepository;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bridgelabz.employeepayrollapp.exception.NotFoundException;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeePayrollService implements IEmployeePayrollService {
@@ -18,81 +22,77 @@ public class EmployeePayrollService implements IEmployeePayrollService {
     @Autowired
     private EmployeePayrollRepository employeePayrollRepository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     /**
      * Method to get employee payroll data
+     *
      * @return
      */
     @Override
     public List<EmployeePayrollData> getEmployeePayrollData() {
-        return employeePayrollRepository.findAll();
+        return employeePayrollRepository.findAll().stream()
+                .map(contact -> modelMapper.map(contact, EmployeePayrollData.class))
+                .collect(Collectors.toList());
     }
 
-    /**
-     * Method to get employee data by id
-     * @param empId
-     * @return
-     */
-    @Override
-    public EmployeePayrollData getEmployeePayrollById(int empId)  {
-        return employeePayrollRepository.findById(empId)
-                .orElseThrow(() -> new NotFoundException("User id not found" +empId));
-    }
 
     /**
      * Method to create employee payroll data
+     *
      * @param empPayrollDTO
      * @return
      */
     @Override
-    public ResponseDTO createEmployeePayrollData(EmployeePayrollDTO empPayrollDTO) {
-       EmployeePayrollData empData = new EmployeePayrollData();
-       empData = this.convertEntity(empData, empPayrollDTO);
-       empData = employeePayrollRepository.save(empData);
-       if (empData != null) {
-           return new  ResponseDTO("Data inserted successfully!!");
-       } else {
-           throw new EmployeePayrollException("Insertion failed");
-       }
+    public EmployeePayrollDTO createEmployeePayrollData(EmployeePayrollDTO empPayrollDTO) {
+        EmployeePayrollData employeeRequest = modelMapper.map(empPayrollDTO, EmployeePayrollData.class);
+        employeePayrollRepository.save(employeeRequest);
+        return empPayrollDTO;
     }
 
     /**
      * Method to update employee data for given id
+     *
      * @param empID
      * @param empPayrollDTO
      * @return
      */
     @Override
-    public EmployeePayrollData updateEmployeePayrollData(int empID,
-                                                         EmployeePayrollDTO empPayrollDTO)  {
+    public EmployeePayrollDTO updateEmployeePayrollData(int empID,
+                                                         EmployeePayrollDTO empPayrollDTO) {
+        EmployeePayrollDTO employeeResponse = null;
         EmployeePayrollData empData = employeePayrollRepository.findById(empID)
                 .orElseThrow(() -> new NotFoundException("User not found with this Id: " + empID));
-        empData = this.convertEntity(empData, empPayrollDTO);
-        empData.setId(empID);
-        return employeePayrollRepository.save(empData);
-    }
+
+            String[] ignoreFields = {"id", "name", "startDate"};
+            BeanUtils.copyProperties(empPayrollDTO, empData, ignoreFields);
+            employeePayrollRepository.save(empData);
+            employeeResponse = modelMapper.map(empData, EmployeePayrollDTO.class);
+
+            return employeeResponse;
+        }
 
     /**
      * Method to delete employee data by id
+     *
      * @param empId
      * @return
      */
     @Override
-    public ResponseDTO deleteEmployeePayrollData(int empId) {
+    public void deleteEmployeePayrollData(int empId) {
+        EmployeePayrollData employeePayrollData = findEmployeeById(empId);
         employeePayrollRepository.deleteById(empId);
-        return new ResponseDTO("Deleted Successfully");
     }
 
     /**
-     * Method to convert employee payroll data to transfer object
-     * @param empData
-     * @param employeePayrollDTO
+     * Method to find employee by id
+     * @param id
      * @return
      */
-    private EmployeePayrollData convertEntity (EmployeePayrollData empData, EmployeePayrollDTO employeePayrollDTO) {
-        empData.setName(employeePayrollDTO.getName());
-        empData.setDepartment(employeePayrollDTO.getDepartment());
-        empData.setGender(employeePayrollDTO.getGender());
-        empData.setSalary(employeePayrollDTO.getSalary());
-        return empData;
+    private EmployeePayrollData findEmployeeById(int id) {
+        return employeePayrollRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Unable to find any Employee Payroll detail!"));
     }
+
 }

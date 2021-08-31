@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/employeepayrollservice")
 public class EmployeePayrollController {
 
@@ -38,20 +39,12 @@ public class EmployeePayrollController {
      * @return
      */
     @RequestMapping(value = {"/get"})
-    public ResponseEntity<List<EmployeePayrollData>> getEmployeePayrollData() {
-        return new ResponseEntity<>(employeePayrollService.getEmployeePayrollData(), HttpStatus.OK);
+    public ResponseEntity<ResponseDTO> getEmployeePayrollData() {
+        List<EmployeePayrollData> employeeList = employeePayrollService.getEmployeePayrollData();
+        ResponseDTO responseDTO = new ResponseDTO("Fetched all Employee Payroll Details", employeeList);
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
-    /**
-     * Get employee data by ID
-     * @param empID
-     * @return
-     * @throws NotFoundException
-     */
-    @GetMapping("/get/{empID}")
-    public ResponseEntity<EmployeePayrollData> getEmployeePayrollData(@PathVariable int empID) throws NotFoundException {
-        return new ResponseEntity<>(employeePayrollService.getEmployeePayrollById(empID), HttpStatus.OK);
-    }
 
     /**
      * Create valid employee data in database
@@ -62,14 +55,9 @@ public class EmployeePayrollController {
     @PostMapping("/create")
     public ResponseEntity<ResponseDTO> addEmployeePayrollData(
             @Valid @RequestBody EmployeePayrollDTO employeePayrollDTO, BindingResult e) {
-        if (e.hasErrors()) {
-            List<String> error = e.getAllErrors().stream()
-                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(new ResponseDTO("Validation Error"),
-                    HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<ResponseDTO>(employeePayrollService.createEmployeePayrollData(employeePayrollDTO), HttpStatus.OK);
+        EmployeePayrollDTO addData = employeePayrollService.createEmployeePayrollData(employeePayrollDTO);
+        ResponseDTO responseDTO = new ResponseDTO("Added Employee Payroll Details",  addData);
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     /**
@@ -80,18 +68,21 @@ public class EmployeePayrollController {
      * @throws NotFoundException
      */
     @PutMapping("/update/{empID}")
-    public ResponseEntity<EmployeePayrollData> updateEmployeePayrollData(@PathVariable int empID,
+    public ResponseEntity<ResponseDTO> updateEmployeePayrollData(@PathVariable int empID,
            @Valid @RequestBody EmployeePayrollDTO employeePayrollDTO) throws NotFoundException {
-        return new ResponseEntity<>(employeePayrollService.updateEmployeePayrollData(empID,employeePayrollDTO), HttpStatus.OK);
+        EmployeePayrollDTO updatedData = employeePayrollService.updateEmployeePayrollData(empID, employeePayrollDTO);
+        ResponseDTO responseDTO = new ResponseDTO("Updated by ID : Employee Payroll Details", updatedData);
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     /**
      * Delete employee data by ID
-     * @param empID
      * @return
      */
-    @DeleteMapping("/delete/{empID}")
-    public ResponseEntity<ResponseDTO> deleteEmployeePayrollData(@PathVariable int empID) {
-        return new ResponseEntity<ResponseDTO>(employeePayrollService.deleteEmployeePayrollData(empID), HttpStatus.OK);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<ResponseDTO> deleteEmployeeDetails(@PathVariable(name = "id") int id) {
+        employeePayrollService.deleteEmployeePayrollData(id);
+        ResponseDTO responseDTO = new ResponseDTO("Deleted by ID : Employee Payroll Details", null);
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 }

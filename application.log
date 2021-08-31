@@ -1,6 +1,12 @@
-2021-08-13 19:48:17.959  INFO 16284 --- [restartedMain] c.b.e.EmployeepayrollAppApplication      : Starting EmployeepayrollAppApplication using Java 11.0.12 on LAPTOP-MQKAP2C2 with PID 16284 (C:\Users\namir\IdeaProjects\employeepayrollapp\target\classes started by namir in C:\Users\namir\IdeaProjects\employeepayrollapp)
-2021-08-13 19:48:17.975 DEBUG 16284 --- [restartedMain] c.b.e.EmployeepayrollAppApplication      : Running with Spring Boot v2.5.3, Spring v5.3.9
-2021-08-13 19:48:17.975  INFO 16284 --- [restartedMain] c.b.e.EmployeepayrollAppApplication      : No active profile set, falling back to default profiles: default
-2021-08-13 19:48:21.389  WARN 16284 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2021-08-13 19:48:21.969  INFO 16284 --- [restartedMain] c.b.e.EmployeepayrollAppApplication      : Started EmployeepayrollAppApplication in 4.485 seconds (JVM running for 5.003)
-2021-08-13 19:48:21.969  INFO 16284 --- [restartedMain] c.b.e.EmployeepayrollAppApplication      : Employee Payroll App Started
+2021-08-31 08:14:49.544  INFO 15436 --- [restartedMain] c.b.e.EmployeepayrollAppApplication      : Starting EmployeepayrollAppApplication using Java 11.0.11 on LAPTOP-A808IRQG with PID 15436 (C:\Users\User\IdeaProjects\employee-payroll-backend\target\classes started by User in C:\Users\User\IdeaProjects\employee-payroll-backend)
+2021-08-31 08:14:49.590 DEBUG 15436 --- [restartedMain] c.b.e.EmployeepayrollAppApplication      : Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-08-31 08:14:49.592  INFO 15436 --- [restartedMain] c.b.e.EmployeepayrollAppApplication      : No active profile set, falling back to default profiles: default
+2021-08-31 08:14:59.759  WARN 15436 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-08-31 08:15:00.950  INFO 15436 --- [restartedMain] c.b.e.EmployeepayrollAppApplication      : Started EmployeepayrollAppApplication in 12.889 seconds (JVM running for 15.756)
+2021-08-31 08:15:00.960  INFO 15436 --- [restartedMain] c.b.e.EmployeepayrollAppApplication      : Employee Payroll App Started
+2021-08-31 08:51:12.904  INFO 14192 --- [restartedMain] c.b.e.EmployeepayrollAppApplication      : Starting EmployeepayrollAppApplication using Java 11.0.11 on LAPTOP-A808IRQG with PID 14192 (C:\Users\User\IdeaProjects\employee-payroll-backend\target\classes started by User in C:\Users\User\IdeaProjects\employee-payroll-backend)
+2021-08-31 08:51:12.912 DEBUG 14192 --- [restartedMain] c.b.e.EmployeepayrollAppApplication      : Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-08-31 08:51:12.913  INFO 14192 --- [restartedMain] c.b.e.EmployeepayrollAppApplication      : No active profile set, falling back to default profiles: default
+2021-08-31 08:51:32.253  WARN 14192 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-08-31 08:51:34.128  INFO 14192 --- [restartedMain] c.b.e.EmployeepayrollAppApplication      : Started EmployeepayrollAppApplication in 23.929 seconds (JVM running for 29.196)
+2021-08-31 08:51:34.135  INFO 14192 --- [restartedMain] c.b.e.EmployeepayrollAppApplication      : Employee Payroll App Started

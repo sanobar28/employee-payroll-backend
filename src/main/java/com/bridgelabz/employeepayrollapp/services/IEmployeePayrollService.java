@@ -9,15 +9,13 @@ import java.util.List;
 
 public interface IEmployeePayrollService {
 
-    public List<EmployeePayrollData> getEmployeePayrollData();
+    List<EmployeePayrollData> getEmployeePayrollData();
 
-    public EmployeePayrollData getEmployeePayrollById(int empTd) throws NotFoundException;
-
-    public ResponseDTO createEmployeePayrollData(
+    EmployeePayrollDTO createEmployeePayrollData(
             EmployeePayrollDTO empPayrollDTO);
 
-    public EmployeePayrollData updateEmployeePayrollData(int empID,
+    EmployeePayrollDTO updateEmployeePayrollData(int empID,
             EmployeePayrollDTO empPayrollDTO) throws NotFoundException;
 
-    public ResponseDTO deleteEmployeePayrollData(int empId);
+    void deleteEmployeePayrollData(int empId);
 }

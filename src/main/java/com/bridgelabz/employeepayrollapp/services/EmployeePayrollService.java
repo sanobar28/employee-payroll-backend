@@ -60,18 +60,17 @@ public class EmployeePayrollService implements IEmployeePayrollService {
      */
     @Override
     public EmployeePayrollDTO updateEmployeePayrollData(int empID,
-                                                         EmployeePayrollDTO empPayrollDTO) {
+                                                        EmployeePayrollDTO empPayrollDTO) {
         EmployeePayrollDTO employeeResponse = null;
-        EmployeePayrollData empData = employeePayrollRepository.findById(empID)
-                .orElseThrow(() -> new NotFoundException("User not found with this Id: " + empID));
-
-            String[] ignoreFields = {"id", "name", "startDate"};
+        if (empID > 0) {
+            EmployeePayrollData empData = findEmployeeById(empID);
+            String[] ignoreFields = {"id", "startDate"};
             BeanUtils.copyProperties(empPayrollDTO, empData, ignoreFields);
             employeePayrollRepository.save(empData);
             employeeResponse = modelMapper.map(empData, EmployeePayrollDTO.class);
-
-            return employeeResponse;
         }
+        return employeeResponse;
+    }
 
     /**
      * Method to delete employee data by id
@@ -87,6 +86,7 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 
     /**
      * Method to find employee by id
+     *
      * @param id
      * @return
      */
